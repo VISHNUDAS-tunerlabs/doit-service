@@ -106,5 +106,5 @@ module.exports = function () {
             const name = file.replace('.js', '');
             global[name + 'Consumer'] = require(path.join(global.PROJECT_ROOT_DIRECTORY, 'generics', 'kafka', 'consumers', file));
         }
-    });
+    })
 };
