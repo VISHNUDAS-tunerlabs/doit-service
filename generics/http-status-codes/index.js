@@ -1,5 +1,5 @@
 /**
- * name 		    : common.js
+ * name 		    : index.js
  * author 		  : vishnu
  * Date 		    : 30-Oct-2024
  * Description  : All http status code and messages.

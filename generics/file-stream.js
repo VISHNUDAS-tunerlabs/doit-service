@@ -1,44 +1,46 @@
 /**
- * name : file-stream.js
- * author : Aman Karki
- * Date : 13-July-2020
- * Description : json2csvtransform (Streaming API).
+ * name         : file-stream.js
+ * author 		  : vishnu
+ * Date 		    : 30-Oct-2024
+ * Description  : json2csvtransform (Streaming API).
  */
 
 // Dependencies
 const json2Csv = require('json2csv').Transform;
-const stream = require("stream");
-const fs = require("fs");
-const moment = require("moment-timezone");
+const stream = require('stream');
+const fs = require('fs');
+const moment = require('moment-timezone');
 
 /**
-    * FileStream
-    * @class
-*/
+ * FileStream
+ * @class
+ */
 
 let FileStream = class FileStream {
-
   constructor(fileName) {
     const currentDate = new Date();
-    const fileExtensionWithTime = moment(currentDate).tz("Asia/Kolkata").format("YYYY_MM_DD_HH_mm") + ".csv";
-    
-    if( !fs.existsSync("public")) {
-      fs.mkdirSync("public");
+    const fileExtensionWithTime =
+      moment(currentDate).tz('Asia/Kolkata').format('YYYY_MM_DD_HH_mm') + '.csv';
+
+    if (!fs.existsSync('public')) {
+      fs.mkdirSync('public');
     }
 
-    if( !fs.existsSync("public" + "/" + "reports")) {
-      fs.mkdirSync("public" + "/" + "reports");
+    if (!fs.existsSync('public' + '/' + 'reports')) {
+      fs.mkdirSync('public' + '/' + 'reports');
     }
-    const filePath = `${"public"}/${"reports"}/${moment(currentDate).tz("Asia/Kolkata").format("YYYY_MM_DD")}/`;
+    const filePath = `${'public'}/${'reports'}/${moment(currentDate)
+      .tz('Asia/Kolkata')
+      .format('YYYY_MM_DD')}/`;
     this.ensureDirectoryPath(filePath);
     this.input = new stream.Readable({ objectMode: true });
-    this.fileName = filePath + fileName + "_" + fileExtensionWithTime;
+    this.fileName = filePath + fileName + '_' + fileExtensionWithTime;
     this.output = fs.createWriteStream(this.fileName, { encoding: 'utf8' });
     this.processor = null;
   }
 
   initStream() {
-    this.input._read = () => { };
+    this.input._read = () => {};
     const opts = {};
     const transformOpts = { objectMode: true };
     const json2csv = new json2Csv(opts, transformOpts);
@@ -61,11 +63,10 @@ let FileStream = class FileStream {
     try {
       fs.mkdirSync(filePath, { recursive: true });
     } catch (err) {
-      console.log(err)
-      if (err.code !== 'EEXIST') throw err
+      console.log(err);
+      if (err.code !== 'EEXIST') throw err;
     }
   }
-
 };
 
 module.exports = FileStream;

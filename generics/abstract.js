@@ -1,23 +1,21 @@
 /**
- * name : abstract.js
- * author : Aman Karki.
- * Date : 13-July-2020
- * Description : Abstract class.
+ * name         : abstract.js
+ * author 		  : vishnu
+ * Date 		    : 30-Oct-2024
+ * Description  : Abstract class.
  */
 
- /**
-    * Abstract
-    * @class
-*/
+/**
+ * Abstract
+ * @class
+ */
 
 let Abstract = class Abstract {
-  
   constructor(schema) {
     database.createModel(schemas[schema]);
-    if ( schemas[schema].compoundIndex && schemas[schema].compoundIndex.length > 0 ) {
-      database.runCompoundIndex(schemas[schema].name,schemas[schema].compoundIndex);
+    if (schemas[schema].compoundIndex && schemas[schema].compoundIndex.length > 0) {
+      database.runCompoundIndex(schemas[schema].name, schemas[schema].compoundIndex);
     }
-    
   }
 };
 

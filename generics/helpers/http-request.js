@@ -1,5 +1,5 @@
 /**
- * name 		: common.js
+ * name 		: http-requet.js
  * author 		: vishnu
  * Date 		: 30-Oct-2024
  * Description  : all http requests.
