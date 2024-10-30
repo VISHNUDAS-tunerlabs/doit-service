@@ -6,4 +6,20 @@
  */
 // Dependencies
 
-module.exports = {};
+/**
+ * Convert hyphen case string to camelCase.
+ * @function
+ * @name hyphenCaseToCamelCase
+ * @param {String} string - String in hyphen case.
+ * @returns {String} returns a camelCase string.
+ */
+
+function hyphenCaseToCamelCase(string) {
+  return string.replace(/-([a-z])/g, function (g) {
+    return g[1].toUpperCase();
+  });
+}
+
+module.exports = {
+  hyphenCaseToCamelCase: hyphenCaseToCamelCase,
+};
