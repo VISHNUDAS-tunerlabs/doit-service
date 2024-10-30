@@ -1,8 +1,8 @@
 /**
- * name           : mongodb.js.
- * author          : Aman Karki.
- * created-date : 13-July-2020.
- * Description : mongodb configurations.
+ * name             : mongodb.js.
+ * author           : Vishnu
+ * created-date     : 30-Oct-2024.
+ * Description      : mongodb configurations.
  */
 
 // dependencies

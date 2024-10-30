@@ -1,8 +1,8 @@
 /**
- * name : index.js
- * author : Aman Karki
- * created-date : 13-July-2020
- * Description : Configurations related information.
+ * name 		: connectio.js
+ * author 		: Vishnu
+ * created-date : 30-Oct-2024
+ * Description 	: onnections related information.
  */
 
 /**
@@ -18,23 +18,12 @@ const mongodb_connect = function () {
 	global.Abstract = require('../generics/abstract')
 }
 
-/**
- * Kafka connection.
- * @function
- * @name kafka_connect
- */
-
-const kafka_connect = function () {
-	global.kafkaClient = require('./kafka')()
-}
-
 // Configuration data.
 
 const configuration = {
-	name: 'ml-project-api',
+	name: 'doit-api',
 }
 
 mongodb_connect()
-kafka_connect()
 
 module.exports = configuration
