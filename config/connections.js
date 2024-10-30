@@ -25,5 +25,4 @@ const configuration = {
 }
 
 mongodb_connect()
-
 module.exports = configuration

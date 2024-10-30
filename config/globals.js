@@ -1,103 +1,110 @@
 /**
- * name : globals.js
- * author : Aman Karki
- * created-date : 13-July-2020
- * Description : Globals data.
+ * name 		: globals.js
+ * author 		: vishnu
+ * created-date : 30-Oct-2024
+ * Description 	: Globals data.
  */
 
-// dependencies
+/**
+ * Globals configuration file.
+ *
+ * @file globals.js
+ * @author Vishnu
+ * @since 2024-10-30
+ * @description Global data and configurations.
+ */
 
-const fs = require('fs')
-const path = require('path')
-const requireAll = require('require-all')
+// Dependencies
+const fs = require('fs');
+const path = require('path');
+const requireAll = require('require-all');
 
 module.exports = function () {
-	global.async = require('async')
-	global.PROJECT_ROOT_DIRECTORY = path.join(__dirname, '..')
-	global.MODULES_BASE_PATH = PROJECT_ROOT_DIRECTORY + '/module'
-	global.DB_QUERY_BASE_PATH = PROJECT_ROOT_DIRECTORY + '/databaseQueries'
-	global.GENERICS_FILES_PATH = PROJECT_ROOT_DIRECTORY + '/generics'
-	global.SERVICES_BASE_PATH = GENERICS_FILES_PATH + '/services'
-	global.GENERIC_HELPERS_PATH = GENERICS_FILES_PATH + '/helpers'
-	global._ = require('lodash')
-	global.UTILS = require(GENERIC_HELPERS_PATH + '/utils')
+    global.async = require('async');
+    global.PROJECT_ROOT_DIRECTORY = path.join(__dirname, '..');
+    global.MODULES_BASE_PATH = path.join(global.PROJECT_ROOT_DIRECTORY, 'module');
+    global.DB_QUERY_BASE_PATH = path.join(global.PROJECT_ROOT_DIRECTORY, 'databaseQueries');
+    global.GENERICS_FILES_PATH = path.join(global.PROJECT_ROOT_DIRECTORY, 'generics');
+    global.SERVICES_BASE_PATH = path.join(global.GENERICS_FILES_PATH, 'services');
+    global.GENERIC_HELPERS_PATH = path.join(global.GENERICS_FILES_PATH, 'helpers');
+    global._ = require('lodash');
+    global.UTILS = require(path.join(global.GENERIC_HELPERS_PATH, 'utils'));
 
-	global.CSV_FILE_STREAM = require(PROJECT_ROOT_DIRECTORY + '/generics/file-stream')
-	require('./connections')
+    global.CSV_FILE_STREAM = require(path.join(global.PROJECT_ROOT_DIRECTORY, 'generics', 'file-stream'));
+    require('./connections');
 
-	global.HTTP_STATUS_CODE = require(GENERICS_FILES_PATH + '/http-status-codes')
+    global.HTTP_STATUS_CODE = require(path.join(global.GENERICS_FILES_PATH, 'http-status-codes'));
 
-	// Load database models.
-	global.models = requireAll({
-		dirname: PROJECT_ROOT_DIRECTORY + '/models',
-		filter: /(.+)\.js$/,
-		resolve: function (Model) {
-			return Model
-		},
-	})
+    // Load database models.
+    global.models = requireAll({
+        dirname: path.join(global.PROJECT_ROOT_DIRECTORY, 'models'),
+        filter: /(.+)\.js$/,
+        resolve: function (Model) {
+            return Model;
+        },
+    });
 
-	//load base v1 controllers
-	const pathToController = PROJECT_ROOT_DIRECTORY + '/controllers/v1/'
+    // Load base v1 controllers
+    const pathToController = path.join(global.PROJECT_ROOT_DIRECTORY, 'controllers', 'v1');
 
-	fs.readdirSync(pathToController).forEach(function (file) {
-		checkWhetherFolderExistsOrNot(pathToController, file)
-	})
+    fs.readdirSync(pathToController).forEach(function (file) {
+        checkWhetherFolderExistsOrNot(pathToController, file);
+    });
 
-	/**
-	 * Check whether folder exists or Not.
-	 * @method
-	 * @name checkWhetherFolderExistsOrNot
-	 * @param {String} pathToFolder - path to folder.
-	 * @param {String} file - File name.
-	 */
+    /**
+     * Check whether folder exists or not.
+     * @method
+     * @name checkWhetherFolderExistsOrNot
+     * @param {String} pathToFolder - Path to folder.
+     * @param {String} file - File name.
+     */
+    function checkWhetherFolderExistsOrNot(pathToFolder, file) {
+        const fullPath = path.join(pathToFolder, file);
+        const folderExists = fs.lstatSync(fullPath).isDirectory();
 
-	function checkWhetherFolderExistsOrNot(pathToFolder, file) {
-		let folderExists = fs.lstatSync(pathToFolder + file).isDirectory()
+        if (folderExists) {
+            fs.readdirSync(fullPath).forEach(function (folderOrFile) {
+                checkWhetherFolderExistsOrNot(path.join(pathToFolder, file), folderOrFile);
+            });
+        } else {
+            if (file.match(/\.js$/) !== null) {
+                require(fullPath);
+            }
+        }
+    }
 
-		if (folderExists) {
-			fs.readdirSync(pathToFolder + file).forEach(function (folderOrFile) {
-				checkWhetherFolderExistsOrNot(pathToFolder + file + '/', folderOrFile)
-			})
-		} else {
-			if (file.match(/\.js$/) !== null) {
-				require(pathToFolder + file)
-			}
-		}
-	}
+    // Schema for DB.
+    global.schemas = {};
+    fs.readdirSync(path.join(global.PROJECT_ROOT_DIRECTORY, 'models')).forEach(function (file) {
+        if (file.match(/\.js$/) !== null) {
+            const name = file.replace('.js', '');
+            global.schemas[name] = require(path.join(global.PROJECT_ROOT_DIRECTORY, 'models', file));
+        }
+    });
 
-	// Schema for db.
-	global.schemas = new Array()
-	fs.readdirSync(PROJECT_ROOT_DIRECTORY + '/models/').forEach(function (file) {
-		if (file.match(/\.js$/) !== null) {
-			var name = file.replace('.js', '')
-			global.schemas[name] = require(PROJECT_ROOT_DIRECTORY + '/models/' + file)
-		}
-	})
+    // All controllers
+    global.controllers = requireAll({
+        dirname: path.join(global.PROJECT_ROOT_DIRECTORY, 'controllers'),
+        resolve: function (Controller) {
+            return new Controller();
+        },
+    });
 
-	// All controllers
-	global.controllers = requireAll({
-		dirname: PROJECT_ROOT_DIRECTORY + '/controllers',
-		resolve: function (Controller) {
-			return new Controller()
-		},
-	})
+    // Message constants
+    global.CONSTANTS = {};
+    fs.readdirSync(path.join(global.GENERICS_FILES_PATH, 'constants')).forEach(function (file) {
+        if (file.match(/\.js$/) !== null) {
+            let name = file.replace('.js', '');
+            name = global.UTILS.hyphenCaseToCamelCase(name);
+            global.CONSTANTS[name] = require(path.join(global.GENERICS_FILES_PATH, 'constants', file));
+        }
+    });
 
-	// Message constants
-	global.CONSTANTS = new Array()
-	fs.readdirSync(GENERICS_FILES_PATH + '/constants').forEach(function (file) {
-		if (file.match(/\.js$/) !== null) {
-			let name = file.replace('.js', '')
-			name = UTILS.hyphenCaseToCamelCase(name)
-			global.CONSTANTS[name] = require(GENERICS_FILES_PATH + '/constants/' + file)
-		}
-	})
-
-	// KAFKA CONSUMERS
-
-	fs.readdirSync(PROJECT_ROOT_DIRECTORY + '/generics/kafka/consumers').forEach(function (file) {
-		if (file.match(/\.js$/) !== null) {
-			var name = file.replace('.js', '')
-			global[name + 'Consumer'] = require(PROJECT_ROOT_DIRECTORY + '/generics/kafka/consumers/' + file)
-		}
-	})
-}
+    // Kafka Consumers
+    fs.readdirSync(path.join(global.PROJECT_ROOT_DIRECTORY, 'generics', 'kafka', 'consumers')).forEach(function (file) {
+        if (file.match(/\.js$/) !== null) {
+            const name = file.replace('.js', '');
+            global[name + 'Consumer'] = require(path.join(global.PROJECT_ROOT_DIRECTORY, 'generics', 'kafka', 'consumers', file));
+        }
+    });
+};
