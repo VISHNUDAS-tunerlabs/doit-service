@@ -27,7 +27,7 @@ module.exports = class UserProjects extends Abstract {
    */
 
   constructor() {
-    super('solutions');
+    super('tasks');
   }
 
   static get name() {

@@ -28,103 +28,13 @@ let enviromentVariables = {
     message: 'Required internal access token',
     optional: false,
   },
-  GOTENBERG_URL: {
-    message: 'Gotenberg url required',
-    optional: false,
-  },
-  KAFKA_COMMUNICATIONS_ON_OFF: {
-    message: 'Enable/Disable kafka communications',
-    optional: false,
-  },
-  // "KAFKA_URL" : {
-  //   "message" : "Required",
-  //   "optional" : false
-  // },
-  SERVICE_NAME: {
-    message: 'Project service name required',
-    optional: false,
-    default: 'project',
-  },
-  CERTIFICATE_SERVICE_URL: {
-    message: 'certificate service base url',
-    optional: true,
-    default: 'http://registry-service:8081',
-    requiredIf: {
-      key: 'PROJECT_CERTIFICATE_ON_OFF',
-      operator: 'EQUALS',
-      value: 'ON',
-    },
-  },
-  PROJECT_CERTIFICATE_ON_OFF: {
-    message: 'Enable/Disable project certification',
-    optional: false,
-    default: 'ON',
-  },
-  // cloud service variables
-  CLOUD_STORAGE_PROVIDER: {
-    message: 'Require cloud storage provider',
-    optional: false,
-  },
-  CLOUD_STORAGE_BUCKETNAME: {
-    message: 'Require client storage bucket name',
-    optional: false,
-  },
-  CLOUD_STORAGE_SECRET: {
-    message: 'Require client storage provider identity',
-    optional: false,
-  },
-  CLOUD_STORAGE_ACCOUNTNAME: {
-    message: 'Require client storage account name',
-    optional: false,
-  },
-  ALLOWED_HOST: {
-    message: 'Required CORS allowed host',
-    optional: true,
-    default: '*',
-  },
-  // signedUrl and downloadAble url expiry durations
-  DOWNLOADABLE_URL_EXPIRY_IN_SECONDS: {
-    message: 'Required downloadable url expiration time',
-    optional: false,
-    default: 300,
-  },
-  PRESIGNED_URL_EXPIRY_IN_SECONDS: {
-    message: 'Required presigned url expiration time',
-    optional: false,
-    default: 300,
-  },
-  // default organisation code
-  DEFAULT_ORGANISATION_CODE: {
-    message: 'Default Organization Id/Code is required',
-    optional: false,
-  },
   APP_PORTAL_BASE_URL: {
     message: 'App Portal base url required',
     optional: false,
     default: 'https://dev.elevate.org',
   },
-  TIMEZONE_DIFFRENECE_BETWEEN_LOCAL_TIME_AND_UTC: {
-    message: 'Timezone diffrence required',
-    optional: false,
-  },
-  ELEVATE_PROJECT_SERVICE_URL: {
-    message: 'Elevate project service url required',
-    optional: false,
-  },
   API_DOC_URL: {
     message: 'Required api doc url',
-    optional: false,
-  },
-  INTERFACE_SERVICE_URL: {
-    message: 'Interface service url required',
-    optional: false,
-  },
-  USER_SERVICE_BASE_URL: {
-    message: 'User service name required',
-    optional: false,
-  },
-  ENTITY_MANAGEMENT_SERVICE_BASE_URL: {
-    message: 'Entity management service name required',
     optional: false,
   },
 };
