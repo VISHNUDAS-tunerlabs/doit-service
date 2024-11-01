@@ -22,7 +22,6 @@ module.exports = {
     },
     assignedTo: {
       type: String,
-      default: 'SYSTEM',
       index: true,
     },
     status: {
@@ -46,13 +45,8 @@ module.exports = {
       default: 'SYSTEM',
       index: true,
     },
-    tasks: {
+    statusUpdateHistory: {
       type: Array,
-      default: [],
-    },
-    updateHistory: {
-      type: Object,
-      default: {},
     },
     priority: {
       type: String,

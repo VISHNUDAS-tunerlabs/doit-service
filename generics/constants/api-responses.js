@@ -5,4 +5,7 @@
  * Description 	: All api response messages.
  */
 
-module.exports = {};
+module.exports = {
+  TASK_NOT_CREATED: 'Task Creation Failed',
+  TASK_CREATED_SUCCESSFULLY: 'Task Created Successfully',
+};
