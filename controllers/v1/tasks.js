@@ -48,12 +48,11 @@ module.exports = class Tasks extends Abstract {
   async create(req) {
     return new Promise(async (resolve, reject) => {
       try {
-        let createdForm = await formsHelpers.create(
+        let taskDetails = await tasksHelpers.create(
           req.body,
           req.userDetails.userInformation.userId,
         );
-
-        return resolve(createdForm);
+        return resolve(taskDetails);
       } catch (error) {
         return resolve({
           status: error.status || HTTP_STATUS_CODE.internal_server_error.status,
