@@ -106,6 +106,7 @@ module.exports = class TasksHelper {
 
         const updatedTask = await tasksQueries.update(filter, dataForUpdation, { new: true });
         if (!updatedTask || !updatedTask._id) {
+          console.log('herrrrrrrrrrrrr', CONSTANTS.apiResponses.TASK_NOT_UPDATED);
           return resolve({
             status: HTTP_STATUS_CODE.bad_request.status,
             message: CONSTANTS.apiResponses.TASK_NOT_UPDATED,
@@ -117,6 +118,7 @@ module.exports = class TasksHelper {
           result: updatedTask,
         });
       } catch (error) {
+        console.log('error', error);
         return resolve({
           message: error.message,
           success: false,

@@ -8,4 +8,6 @@
 module.exports = {
   TASK_NOT_CREATED: 'Task Creation Failed',
   TASK_CREATED_SUCCESSFULLY: 'Task Created Successfully',
+  TASK_NOT_UPDATED: 'Task Updation Failed',
+  TASK_UPDATED_SUCCESSFULLY: 'Task Updated Successfully',
 };
