@@ -5,6 +5,8 @@ module.exports = (req) => {
 
       req.checkBody('description').trim().notEmpty().withMessage('Description is required.');
 
+      req.checkBody('assigneeName').trim().notEmpty().withMessage('Assignee Name is required.');
+
       req
         .checkBody('priority')
         .trim()
@@ -28,6 +30,10 @@ module.exports = (req) => {
         req.checkBody('title').notEmpty().withMessage('Title cannot be empty.');
       }
 
+      if (req.body.assigneeName !== undefined) {
+        req.checkBody('assigneeName').notEmpty().withMessage('Assignee Name cannot be empty.');
+      }
+
       // Check if description is present, then ensure it is not empty
       if (req.body.description !== undefined) {
         req.checkBody('description').notEmpty().withMessage('Description cannot be empty.');
@@ -49,8 +55,8 @@ module.exports = (req) => {
           .checkBody('status')
           .notEmpty()
           .withMessage('Status cannot be empty.')
-          .isIn(['assigned', 'started', 'completed', 'verified'])
-          .withMessage('Status must be one of: assigned, started, completed, verified.');
+          .isIn(['assigned', 'started', 'completed'])
+          .withMessage('Status must be one of: assigned, started, completed.');
       }
 
       // Check if isDeleted is present, then ensure it is a boolean
@@ -59,19 +65,15 @@ module.exports = (req) => {
       }
     },
     read: function () {
-      // if (req.params._id || Object.keys(req.body).length !== 0) {
-      // 	if (req.params._id) {
-      // 		req.checkParams('_id').notEmpty().withMessage('id param is empty')
-      // 	} else {
-      // 		req.checkBody('type').trim().notEmpty().withMessage('type field is empty')
-      // 		// .matches(/^[A-Za-z]+$/)
-      // 		// .withMessage('type is invalid')
-      // 		req.checkBody('subType').trim().notEmpty().withMessage('subType field is empty')
-      // 		// .matches(/^[A-Za-z]+$/)
-      // 		// .withMessage('subType is invalid')
-      // 	}
-      // }
+      // Check if _id parameter is provided and is a valid MongoDB ObjectId
+      req
+        .checkParams('_id')
+        .notEmpty()
+        .withMessage('_id parameter is required.')
+        .isMongoId()
+        .withMessage('_id must be a valid MongoDB ObjectId.');
     },
+    list: function () {},
   };
 
   if (tasksValidator[req.params.method]) {

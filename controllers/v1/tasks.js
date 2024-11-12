@@ -1,8 +1,8 @@
 /**
- * name         : forms.js
+ * name         : tasks.js
  * author       : Vishnu
  * created-At   : 31-Oct-2024
- * Description  : Forms Controller.
+ * Description  : Tasks Controller.
  */
 
 // dependencies
@@ -137,76 +137,165 @@ module.exports = class Tasks extends Abstract {
     });
   }
 
-  // /**
-  //  * @api {get} /project/v1/forms/read/:_id
-  //  * @apiVersion 1.0.0
-  //  * @apiName read
-  //  * @apiGroup Forms
-  //  * @apiParamExample {json} Request-Body:
-  //  * @apiHeader {String} X-authenticated-user-token Authenticity token
-  //  * @apiSampleRequest /project/v1/forms/read/663cc73584f1a0eb4e97e3db
-  //  * @apiUse successBody
-  //  * @apiUse errorBody
-  //  * @apiParamExample {json} Request-Body:
-  // 	{
-  // 		"type" : "cccc",
-  // 		"subType" : "ppp"
-  // 	}
+  /**
+	 * @api {get} /doit/v1/tasks/read/:_id
+	 * @apiVersion 1.0.0
+	 * @apiName update
+	 * @apiGroup Forms
+	 * @apiParamExample {json} Request-Body:
+	 * @apiHeader {String} X-auth-token Authenticity token
+	 * @apiSampleRequest /doit/v1/tasks/read/663cc73584f1a0eb4e97e3db
+	 * @apiUse successBody
+	 * @apiUse errorBody
+	 * @apiParamExample {json} Request-Body:
+	 * @apiParamExample {json} Response:
+   * {
+        "message": "Fetched Task Details",
+        "status": 200,
+        "result": {
+            "status": "verified",
+            "isDeleted": false,
+            "updatedBy": "162",
+            "createdBy": "162",
+            "statusUpdateHistory": [
+                {
+                    "value": "started",
+                    "changedAt": "2024-11-01T09:18:59.010Z",
+                    "changedBy": "162"
+                },
+                {
+                    "value": "completed",
+                    "changedAt": "2024-11-01T09:23:17.935Z",
+                    "changedBy": "162"
+                },
+                {
+                    "value": "verified",
+                    "changedAt": "2024-11-01T09:23:59.527Z",
+                    "changedBy": "162"
+                }
+            ],
+            "deleted": false,
+            "_id": "67248ee87571e033208b8da7",
+            "title": "Test task creation API update",
+            "description": "This task is to test innovation project apis",
+            "priority": "low",
+            "metaInformation": {
+                "creatorStatus": "verified",
+                "assigneeStatus": "verified",
+                "isTheOwner": true
+            },
+            "updatedAt": "2024-11-01T09:23:59.528Z",
+            "createdAt": "2024-11-01T08:18:48.339Z",
+            "__v": 0,
+            "completedAt": "2024-11-01T09:23:17.935Z",
+            "verifiedAt": "2024-11-01T09:23:59.527Z"
+        }
+    }
+		
+	*/
 
-  //   * @apiParamExample {json} Response:
-  // 	{
-  // 		"message": "Form fetched successfully",
-  // 		"status": 200,
-  // 		"result": {
-  // 			"version": 0,
-  // 			"deleted": false,
-  // 			"_id": "663cc73584f1a0eb4e97e3db",
-  // 			"type": "cccc",
-  // 			"subType": "ppp",
-  // 			"data": {
-  // 				"name": "xyz"
-  // 			},
-  // 			"organizationId": 1,
-  // 			"updatedAt": "2024-05-09T12:57:53.636Z",
-  // 			"createdAt": "2024-05-09T12:53:09.920Z",
-  // 			"__v": 0
-  // 		}
-  // 	}
-  // */
+  /**
+   * read task details
+   * @method
+   * @name read
+   * @param {String} req.params._id                           - task id.
+   * @returns {JSON}                                          - task details.
+   */
 
-  // /**
-  //  * reads form
-  //  * @method
-  //  * @name read
-  //  * @param {String} req.params._id - form id.
-  //  * @param {Object} req.body - request data.
-  //  * @param {Number} req.userDetails.userInformation.organizationId -organization id.
-  //  * @param {String} req.userDetails.userToken -userToken.
-  //  * @returns {JSON} - form object.
-  //  */
+  async read(req) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const taskDetails = await tasksHelpers.read(
+          req.params._id,
+          req.userDetails.userInformation.userId,
+        );
+        return resolve(taskDetails);
+      } catch (error) {
+        return resolve({
+          status: error.status || HTTP_STATUS_CODE.internal_server_error.status,
+          message: error.message || HTTP_STATUS_CODE.internal_server_error.message,
+          errorObject: error,
+        });
+      }
+    });
+  }
 
-  // async read(req) {
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       if (!req.params._id && Object.keys(req.body).length === 0) {
-  //         const formData = await formsHelpers.readAllFormsVersion();
-  //         return resolve(formData);
-  //       } else {
-  //         const formData = await formsHelpers.read(
-  //           req.params._id,
-  //           req.body,
-  //           req.userDetails.userInformation.organizationId,
-  //           req.userDetails.userToken,
-  //         );
-  //         return resolve(formData);
-  //       }
-  //     } catch (error) {
-  //       return resolve({
-  //         status: error.status || HTTP_STATUS_CODE.internal_server_error.status,
-  //         message: error.message || HTTP_STATUS_CODE.internal_server_error.message,
-  //         errorObject: error,
-  //       });
-  //     }
-  //   });
-  // }
+  /**
+	 * @api {get} /doit/v1/tasks/list
+	 * @apiVersion 1.0.0
+	 * @apiName update
+	 * @apiGroup Forms
+	 * @apiParamExample {json} Request-Body:
+	 * @apiHeader {String} X-auth-token Authenticity token
+	 * @apiSampleRequest /doit/v1/tasks/list?page=1&limit=50&search=&filter=all&priority=
+	 * @apiUse successBody
+	 * @apiUse errorBody
+	 * @apiParamExample {json} Request-Body:
+	 * @apiParamExample {json} Response:
+   * 
+   * {
+        "status": 200,
+        "result": {
+            "data": [
+                {
+                    "_id": "67323779334bca5bc44e4c5e",
+                    "status": "assigned",
+                    "title": "Test task creation API update api 2",
+                    "description": "This task is to test innovation project apis",
+                    "priority": "medium",
+                    "metaInformation": {
+                        "creatorStatus": "assigned",
+                        "assigneeStatus": "start",
+                        "assigneeName": "Priyanka"
+                    }
+                },
+                {
+                    "_id": "67323770334bca5bc44e4c5c",
+                    "status": "assigned",
+                    "title": "Test task creation API update api",
+                    "description": "This task is to test innovation project apis",
+                    "priority": "medium",
+                    "metaInformation": {
+                        "creatorStatus": "assigned",
+                        "assigneeStatus": "start",
+                        "assigneeName": "Priyanka"
+                    }
+                }
+            ],
+            "count": 6
+        }
+    }
+   * 
+		
+	*/
+
+  /**
+   * view the list of tasks
+   * @method
+   * @name read
+   * @returns {JSON}                                          - task list.
+   */
+
+  async list(req) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const taskList = await tasksHelpers.list(
+          req.userDetails.userInformation.userId,
+          req.pageNo,
+          req.pageSize,
+          req.searchText,
+          req.query.filter,
+          req.query.status,
+          req.query.priority,
+        );
+        return resolve(taskList);
+      } catch (error) {
+        return resolve({
+          status: error.status || HTTP_STATUS_CODE.internal_server_error.status,
+          message: error.message || HTTP_STATUS_CODE.internal_server_error.message,
+          errorObject: error,
+        });
+      }
+    });
+  }
 };

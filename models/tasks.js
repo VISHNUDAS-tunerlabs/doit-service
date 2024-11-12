@@ -29,6 +29,9 @@ module.exports = {
       default: 'assigned',
       index: true,
     },
+    assigneeName: {
+      type: String,
+    },
     isDeleted: {
       type: Boolean,
       default: false,
