@@ -31,9 +31,11 @@ function hyphenCaseToCamelCase(string) {
 function generateTaskMetaInformation(status) {
   const statusMapping = {
     [CONSTANTS.common.STATUS_ASSIGNED]: { creatorStatus: 'assigned', assigneeStatus: 'start' },
-    [CONSTANTS.common.STATUS_STARTED]: { creatorStatus: 'started', assigneeStatus: 'finish' },
-    [CONSTANTS.common.STATUS_COMPLETED]: { creatorStatus: 'verify', assigneeStatus: 'completed' },
-    [CONSTANTS.common.STATUS_VERIFIED]: { creatorStatus: 'verified', assigneeStatus: 'verified' },
+    [CONSTANTS.common.STATUS_STARTED]: { creatorStatus: 'started', assigneeStatus: 'complete' },
+    [CONSTANTS.common.STATUS_COMPLETED]: {
+      creatorStatus: 'completed',
+      assigneeStatus: 'completed',
+    },
   };
 
   return statusMapping[status] || { creatorStatus: 'unknown', assigneeStatus: 'unknown' };

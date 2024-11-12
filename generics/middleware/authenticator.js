@@ -1,7 +1,7 @@
 /**
- * name 		: authenticator.js
- * author 		: vishnu
- * Date 		: 30-Oct-2024
+ * name 		    : authenticator.js
+ * author 		  : vishnu
+ * Date 		    : 30-Oct-2024
  * Description 	: Authentication middleware.
  */
 
@@ -45,13 +45,7 @@ module.exports = async function (req, res, next, token = '') {
 
   // Allow search endpoints for non-logged in users.
   let guestAccess = false;
-  let guestAccessPaths = [
-    '/dataPipeline/',
-    '/templates/details',
-    'userProjects/certificateCallback',
-    'userProjects/certificateCallbackError',
-    'cloud-services/files/download',
-  ];
+  let guestAccessPaths = [];
   await Promise.all(
     guestAccessPaths.map(async function (path) {
       if (req.path.includes(path)) {
@@ -65,7 +59,7 @@ module.exports = async function (req, res, next, token = '') {
     return;
   }
 
-  let internalAccessApiPaths = ['/templates/bulkCreate'];
+  let internalAccessApiPaths = [];
   let performInternalAccessTokenCheck = false;
   await Promise.all(
     internalAccessApiPaths.map(async function (path) {

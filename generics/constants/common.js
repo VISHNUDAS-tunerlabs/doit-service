@@ -9,8 +9,9 @@ module.exports = {
   STATUS_ASSIGNED: 'assigned',
   STATUS_STARTED: 'started',
   STATUS_COMPLETED: 'completed',
-  STATUS_VERIFIED: 'verified',
   PRIORITY_LOW: 'low',
   PRIORITY_MEDIUM: 'medium',
   PRIORITY_HIGH: 'high',
+  CREATED_BY_ME: 'createdByMe',
+  ASSIGNED_TO_ME: 'assignedToMe',
 };

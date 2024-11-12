@@ -18,7 +18,6 @@ module.exports = (req, res, next) => {
     validatorPath =
       PROJECT_ROOT_DIRECTORY +
       `/module/${req.params.controller}/validator/${req.params.version}.js`;
-    console.log('validatorPath++++++++++ : ', validatorPath);
   }
 
   if (fs.existsSync(validatorPath)) require(validatorPath)(req);
