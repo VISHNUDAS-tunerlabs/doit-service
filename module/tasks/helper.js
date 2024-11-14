@@ -92,8 +92,8 @@ module.exports = class TasksHelper {
 
           if (bodyData.status === CONSTANTS.common.STATUS_COMPLETED)
             updateData.completedAt = new Date();
-          if (bodyData.status === CONSTANTS.common.STATUS_VERIFIED)
-            updateData.verifiedAt = new Date();
+          if (bodyData.status === CONSTANTS.common.STATUS_STARTED)
+            updateData.startedAt = new Date();
         }
         dataForUpdation['$set'] = updateData;
         const filter = {

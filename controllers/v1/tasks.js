@@ -188,7 +188,7 @@ module.exports = class Tasks extends Abstract {
             "createdAt": "2024-11-01T08:18:48.339Z",
             "__v": 0,
             "completedAt": "2024-11-01T09:23:17.935Z",
-            "verifiedAt": "2024-11-01T09:23:59.527Z"
+            "startedAt": "2024-11-01T09:23:59.527Z"
         }
     }
 		

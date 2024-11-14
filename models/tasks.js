@@ -41,7 +41,7 @@ module.exports = {
       type: String,
       default: 'SYSTEM',
     },
-    verifiedAt: Date,
+    startedAt: Date,
     completedAt: Date,
     createdBy: {
       type: String,
